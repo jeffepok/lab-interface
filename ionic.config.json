@@ -1,0 +1,7 @@
+{
+  "name": "knust-central-lab",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
