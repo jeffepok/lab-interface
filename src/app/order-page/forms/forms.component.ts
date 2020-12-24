@@ -130,7 +130,7 @@ export class FormsComponent implements OnInit {
     //doc.autoPrint();
     //This is a key for printing
     //doc.output('dataurlnewwindow');
-    console.log(model.clientName);
+    alert(model.clientName);
   }
 
 }
