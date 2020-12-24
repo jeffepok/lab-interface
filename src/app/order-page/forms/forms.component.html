@@ -1,0 +1,108 @@
+<form [formGroup]="form">
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+        <ion-grid>
+          <ion-row>
+            <ion-col>
+              <h2>Client Info</h2>
+            </ion-col>
+          </ion-row>
+          <ion-row *ngFor="let formInput of formInputs; let i = index">
+            <ion-col>
+              <ion-item>
+                <ion-input placeholder="{{formInput.label}}" formControlName="{{formInput.name}}" required type="{{formInput.type}}"></ion-input>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-col>
+      <ion-col>
+        <ion-grid>
+          <ion-row>
+            <ion-col>
+              <h2>Analysis</h2>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col>
+              <ion-item>
+                <ion-label>Instrument</ion-label>
+              </ion-item>
+            </ion-col>
+            <ion-col>
+              <ion-item>
+                <ion-label>Quantity</ion-label>
+              </ion-item>
+            </ion-col>
+            <ion-col>
+              <ion-item>
+                <ion-label>Amount Ghs</ion-label>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+          <div formArrayName="instrumentList">
+            <ion-row *ngFor="let item of instrumentList.controls; let i=index" [formGroupName]="i">
+              <ion-col>
+                <ion-item>
+                  <ion-select placeholder="Select An Instrument" interface="popover" formControlName="unitPrice">
+                    <ion-select-option ngDefaultControl *ngFor="let instrument of instruments"
+                      [value]="instrument.price">
+                      {{instrument.name}}
+                    </ion-select-option>
+                  </ion-select>
+                </ion-item>
+              </ion-col>
+              <ion-col>
+                <ion-item>
+                  <ion-input type="number" placeholder="Quantity" formControlName="qty" required></ion-input>
+                </ion-item>
+              </ion-col>
+              <ion-col>
+                <ion-item>
+                  <ion-input formControlName='totalPrice'></ion-input>
+                </ion-item>
+              </ion-col>
+              <ion-item lines="none">
+                  <ion-button *ngIf="instrumentList.controls.length > 1" (click)="remInstrument(i)" color="secondary">
+                    <ion-icon name="trash-outline"></ion-icon>
+                  </ion-button>           
+              </ion-item>
+            </ion-row>
+            <ion-row>
+              <ion-col>
+                <ion-item lines="none">
+                  <ion-label color="secondary">
+                    <strong>Total Amount</strong>
+                  </ion-label>
+                </ion-item>
+              </ion-col>
+              <ion-col></ion-col>
+              <ion-col>
+                <ion-item>
+                  <ion-label>{{ totalSum | currency:'GHS':'symbol-narrow':'1.2-2'}}</ion-label>
+                </ion-item>
+              </ion-col>
+            </ion-row>
+          </div>
+          <ion-row>
+            <ion-col>
+              <ion-item lines="none">
+                <ion-button (click)="addInstrument()" color="secondary">Add An Instrument</ion-button>
+              </ion-item>
+            </ion-col>
+            <ion-col>
+              <ion-item>
+                <ion-button (click)="clearAllInstruments()" color="secondary">
+                  <ion-icon slot='start' name="close-circle-outline"></ion-icon>
+                  Clear all
+                </ion-button>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  <ion-button (click)="print(form.value)">Print</ion-button>
+</form>
